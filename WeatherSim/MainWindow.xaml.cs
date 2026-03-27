@@ -21,19 +21,28 @@ namespace WeatherSim
         {
             InitializeComponent();
 
+            
+
             string tempUnit = " °C";
 
             List<Day> days = new List<Day>();
-            days.Add(new Day() { Date = "24.03.2026", ImagePath = "path-placeholder", Temperature = "26.1" + tempUnit, Weather = "Sunny"});
-            days.Add(new Day() { Date = "25.03.2026", ImagePath = "path-placeholder", Temperature = "14.9" + tempUnit, Weather = "Stormy" });
-            days.Add(new Day() { Date = "26.03.2026", ImagePath = "path-placeholder", Temperature = "10" + tempUnit, Weather = "Cloudy" });
+            for (int i = 0; i < 10; i++)
+            {
+                days.Add(new Day
+                {
+                    Date = DateTime.Now.AddDays(i),
+                    ImagePath = "/Assets/Icons/weather_cloudy.png",
+                    Temperature = "15" + tempUnit,
+                    Weather = "Sunny"
+                });
+            }
 
             weatherItemCollection.ItemsSource = days;
         }
     }
     public class Day
     {
-        public string? Date { get; set; }
+        public DateTime Date { get; set; }
         public string? ImagePath { get; set; }
         public string? Temperature { get; set; }
         public string? Weather {  get; set; }

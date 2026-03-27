@@ -8,4 +8,22 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Assets\Icons\weather_cloudy.png" />
+    <None Remove="Assets\Icons\weather_foggy.png" />
+    <None Remove="Assets\Icons\weather_rainy.png" />
+    <None Remove="Assets\Icons\weather_snowy.png" />
+    <None Remove="Assets\Icons\weather_storm.png" />
+    <None Remove="Assets\Icons\weather_sunny.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Icons\weather_cloudy.png" />
+    <Resource Include="Assets\Icons\weather_foggy.png" />
+    <Resource Include="Assets\Icons\weather_rainy.png" />
+    <Resource Include="Assets\Icons\weather_snowy.png" />
+    <Resource Include="Assets\Icons\weather_storm.png" />
+    <Resource Include="Assets\Icons\weather_sunny.png" />
+  </ItemGroup>
+
 </Project>
