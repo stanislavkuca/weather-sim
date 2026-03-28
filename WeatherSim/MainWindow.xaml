@@ -30,6 +30,8 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Column="0" Text="Number of days:" 
@@ -54,6 +56,8 @@
                 <RadioButton VerticalContentAlignment="Center" 
                              FontSize="18" GroupName="Temp">°F</RadioButton>
             </StackPanel>
+
+            <Button Grid.Column="12" Click="SimulateButton" Content="Simulate"/>
         </Grid>
     
         <Grid Grid.Row="2" Margin="20" HorizontalAlignment="Left">
