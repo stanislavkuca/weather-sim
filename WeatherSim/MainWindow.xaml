@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         
         Title="Weather Simulator"
-        Height="700" Width="1200"
+        Height="765" Width="1200"
         WindowStartupLocation="CenterScreen"
         FontFamily="Segoe UI">
     
@@ -76,28 +76,84 @@
         </Grid>
 
         <!-- Weather Item Card -->
-        <Grid Grid.Row="2" Margin="20" HorizontalAlignment="Left">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsControl Name="weatherItemCollection">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border Style="{StaticResource ItemCardStyle}">
-                                <StackPanel HorizontalAlignment="Center" Margin="10">
-                                    <TextBlock Grid.Row="0" Text="{Binding DisplayDate}" Style="{StaticResource ItemTextBlockStyle}"/>
-                                    <Image Grid.Row="1" Source="{Binding ImagePath}" Style="{StaticResource WeatherIconStyle}" RenderOptions.BitmapScalingMode="HighQuality"/>
-                                    <TextBlock Grid.Row="2" Text="{Binding Temperature}" Style="{StaticResource ItemTextBlockStyle}"/>
-                                    <TextBlock Grid.Row="3" Text="{Binding Weather}" Style="{StaticResource ItemTextBlockStyle}"/>
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+            
+            <Grid Grid.Column="0" Margin="20" HorizontalAlignment="Left">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl Name="weatherItemCollection">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource ItemCardStyle}">
+                                    <StackPanel HorizontalAlignment="Center" Margin="10">
+                                        <TextBlock Grid.Row="0" Text="{Binding DisplayDate}" Style="{StaticResource ItemTextBlockStyle}"/>
+                                        <Image Grid.Row="1" Source="{Binding ImagePath}" Style="{StaticResource WeatherIconStyle}" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                        <TextBlock Grid.Row="2" Text="{Binding Temperature}" Style="{StaticResource ItemTextBlockStyle}"/>
+                                        <TextBlock Grid.Row="3" Text="{Binding Weather}" Style="{StaticResource ItemTextBlockStyle}"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+            
+            <!-- Statistics -->
+            <Grid Grid.Column="1" Margin="0 0 20 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Content="Statistics:" Style="{StaticResource LabelStyle}"/>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Average Temperature -->
+                    <TextBlock Grid.Row="0" Text="Avg temperature:" Style="{StaticResource StatsTextBlockStyle}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="2" x:Name="avgTempTextBlock"
+                               Text="" Style="{StaticResource StatsTextBlockStyle}"/>
+
+                    <!-- Max Temperature -->
+                    <TextBlock Grid.Row="2" Text="Max temperature:" Style="{StaticResource StatsTextBlockStyle}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="2" x:Name="maxTempTextBlock"
+                               Text="" Style="{StaticResource StatsTextBlockStyle}"/>
+
+                    <!-- Min Temperature -->
+                    <TextBlock Grid.Row="4" Text="Min temperature:" Style="{StaticResource StatsTextBlockStyle}"/>
+                    <TextBlock Grid.Row="4" Grid.Column="2" x:Name="minTempTextBlock"
+                               Text="" Style="{StaticResource StatsTextBlockStyle}"/>
+
+                    <!-- Weather Counts -->
+                    <TextBlock Grid.Row="6" Text="Weather Count:" Style="{StaticResource StatsTextBlockStyle}"/>
+                    <TextBlock Grid.Row="6" Grid.Column="2" x:Name="weatherCountTextBlock"
+                               Text="" Style="{StaticResource StatsTextBlockStyle}"/>
+                </Grid>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

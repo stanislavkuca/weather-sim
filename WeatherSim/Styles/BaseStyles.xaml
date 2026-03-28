@@ -8,6 +8,23 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style.Setters>
     </Style>
+
+    <!-- Label Text -->
+    <Style x:Key="LabelStyle" TargetType="Label">
+        <Style.Setters>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style.Setters>
+    </Style>
+    
+    <!-- Stats Text Block -->
+    <Style x:Key="StatsTextBlockStyle" TargetType="TextBlock">
+        <Style.Setters>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="5 5 0 0"/>
+        </Style.Setters>
+    </Style>
     
     <!-- Number of Days TextBox -->
     <Style x:Key="NumOfDaysTextBoxStyle" TargetType="TextBox">

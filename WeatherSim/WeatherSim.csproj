@@ -9,15 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\Icons\blank-icon.ico" />
     <None Remove="Assets\Icons\weather_cloudy.png" />
     <None Remove="Assets\Icons\weather_snowy.png" />
     <None Remove="Assets\Icons\weather_storm.png" />
     <None Remove="Assets\Icons\weather_sunny.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Assets\Icons\blank-icon.ico" />
   </ItemGroup>
 
   <ItemGroup>

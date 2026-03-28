@@ -30,14 +30,19 @@ namespace WeatherSim
         }
 
         ObservableCollection<Day> days = new ObservableCollection<Day>();
+        List<int> temps = new List<int>();
+        Dictionary<string, int> weatherCounts = new Dictionary<string, int>();
         WeatherGenerator generator = new WeatherGenerator();
         
         private void SimulateButton(object sender, RoutedEventArgs e)
         {
             days.Clear();
-            int simDayCount = 0;
+            temps.Clear();
+            weatherCounts.Clear();
 
+            int simDayCount = 0;
             string tempUnit = " °C";
+
             try
             {
                 simDayCount = int.Parse(NumDaysTextBox.Text);
@@ -67,6 +72,8 @@ namespace WeatherSim
                     _ => date.ToString("MMM dd, yyyy"),
                 };
 
+                temps.Add(temperature);
+
                 days.Add(new Day
                 {
                     Date = date,
@@ -75,7 +82,34 @@ namespace WeatherSim
                     Temperature = temperature + tempUnit,
                     Weather = weather
                 });
+
+                // Weather Count
+                if (weatherCounts.ContainsKey(weather))
+                    weatherCounts[weather]++;
+                else
+                    weatherCounts[weather] = 1;
             }
+
+            // Avg Temp Calc
+            double avgTemp = Math.Round(temps.Average(), 1);
+            avgTempTextBlock.Text = avgTemp.ToString() + tempUnit;
+
+            // Max Temp
+            int maxTemp = temps.Max();
+            maxTempTextBlock.Text = maxTemp.ToString() + tempUnit;
+
+            // Min Temp
+            int minTemp = temps.Min();
+            minTempTextBlock.Text = minTemp.ToString() + tempUnit;
+
+            // Weather Output
+            StringBuilder sb = new StringBuilder();
+            foreach (var kvp in weatherCounts)
+            {
+                sb.AppendLine($"{kvp.Key}: {kvp.Value}");
+            }
+
+            weatherCountTextBlock.Text = sb.ToString();
         }
     }
 }

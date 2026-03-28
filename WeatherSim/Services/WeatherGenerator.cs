@@ -6,8 +6,8 @@ namespace WeatherSim.Services
 {
     internal class WeatherGenerator
     {
-        private static readonly (string weather, string iconPath) Cloudy = ("Cloudy", "/Assets/Icons/weather_cloudy.png");
         private static readonly (string weather, string iconPath) Snowy = ("Snowy", "/Assets/Icons/weather_snowy.png");
+        private static readonly (string weather, string iconPath) Cloudy = ("Cloudy", "/Assets/Icons/weather_cloudy.png");
         private static readonly (string weather, string iconPath) Sunny = ("Sunny", "/Assets/Icons/weather_sunny.png");
         private static readonly (string weather, string iconPath) Fog = ("Fog", "/Assets/Icons/weather_fog.png");
         private static readonly (string weather, string iconPath) Storm = ("Storm", "/Assets/Icons/weather_storm.png");
@@ -51,8 +51,8 @@ namespace WeatherSim.Services
         // Generates random weather for a given season
         public (string weather, string iconPath) PickWeather(string season)
         {
-            var cloudy = Cloudy;
             var snowy = Snowy;
+            var cloudy = Cloudy;
             var sunny = Sunny;
             var fog = Fog;
             var storm = Storm;
