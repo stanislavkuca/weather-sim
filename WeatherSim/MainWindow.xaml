@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WeatherSim"
         mc:Ignorable="d"
-        Title="" Height="700" Width="1200"
-        WindowStartupLocation="CenterScreen">
+        
+        Title="Weather Simulator"
+        Height="700" Width="1200"
+        WindowStartupLocation="CenterScreen"
+        FontFamily="Segoe UI">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -14,9 +18,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Content="Weather Simulator" FontWeight="Bold"
-               FontSize="25" Margin="18 20 20 0"/>
-        
         <!-- Control Panel -->
         <Grid Grid.Row="1" Margin="20">
             <Grid.ColumnDefinitions>
@@ -37,34 +38,41 @@
             
             <!-- Number of Simulated Days -->
             <TextBlock Grid.Column="0" Text="Number of days:" 
-                       VerticalAlignment="Center" FontSize="18"/>
+                       Style="{StaticResource ControlTextBlockStyle}"/>
             
-            <TextBox Grid.Column="2" Width="50" TextWrapping="NoWrap"
-                     x:Name="NumDaysTextBox"/>
+            <TextBox Grid.Column="2" x:Name="NumDaysTextBox" 
+                     Style="{StaticResource NumOfDaysTextBoxStyle}"/>
 
             <!-- Season Picker -->
             <TextBlock Grid.Column="4" Text="Season:" 
-                       VerticalAlignment="Center" FontSize="18"/>
-            
-            <ComboBox Grid.Column="6" Width="80">
+                       Style="{StaticResource ControlTextBlockStyle}"/>
+
+            <ComboBox Grid.Column="6" Style="{StaticResource SeasonPickerStyle}">
+                <ComboBoxItem IsSelected="True">All</ComboBoxItem>
                 <ComboBoxItem>Spring</ComboBoxItem>
                 <ComboBoxItem>Summer</ComboBoxItem>
-                <ComboBoxItem>Fall</ComboBoxItem>
+                <ComboBoxItem>Autumn</ComboBoxItem>
                 <ComboBoxItem>Winter</ComboBoxItem>
             </ComboBox>
 
             <!-- Temperature Unit Picker -->
             <TextBlock Grid.Column="8" Text="Temp unit:" 
-                       VerticalAlignment="Center" FontSize="18"/>
+                       Style="{StaticResource ControlTextBlockStyle}"/>
             
             <StackPanel Grid.Column="10" Orientation="Horizontal" VerticalAlignment="Center">
-                <RadioButton VerticalContentAlignment="Center" FontSize="18" 
-                             GroupName="Temp" Margin="0 0 15 0">°C</RadioButton>
                 <RadioButton VerticalContentAlignment="Center" 
-                             FontSize="18" GroupName="Temp">°F</RadioButton>
+                             FontSize="24"
+                             GroupName="Temp" 
+                             Margin="0 0 15 0" 
+                             IsChecked="True">°C</RadioButton>
+                
+                <RadioButton VerticalContentAlignment="Center" 
+                             x:Name="temp_F_Button"
+                             FontSize="24" 
+                             GroupName="Temp">°F</RadioButton>
             </StackPanel>
 
-            <Button Grid.Column="12" Click="SimulateButton" Content="Simulate"/>
+            <Button Grid.Column="12" Click="SimulateButton" Content="Simulate" Style="{StaticResource SimulateButtonStyle}"/>
         </Grid>
 
         <!-- Weather Item Card -->

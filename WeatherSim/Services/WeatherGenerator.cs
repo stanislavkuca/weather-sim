@@ -42,6 +42,12 @@ namespace WeatherSim.Services
             };
         }
 
+        public int CelsiusToFahrenheit(int temp)
+        {
+            double conversion = (temp * 1.8) + 32;
+            return (int)Math.Round(conversion);
+        }
+
         // Generates random weather for a given season
         public (string weather, string iconPath) PickWeather(string season)
         {

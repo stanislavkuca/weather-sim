@@ -25,6 +25,7 @@ namespace WeatherSim
         public MainWindow()
         {
             InitializeComponent();
+
             weatherItemCollection.ItemsSource = days;
         }
 
@@ -34,16 +35,30 @@ namespace WeatherSim
         private void SimulateButton(object sender, RoutedEventArgs e)
         {
             days.Clear();
+            int simDayCount = 0;
 
             string tempUnit = " °C";
-            int simDayCount = int.Parse(NumDaysTextBox.Text);
+            try
+            {
+                simDayCount = int.Parse(NumDaysTextBox.Text);
+            }
+            catch
+            {
+                MessageBox.Show("Enter a valid number", "Warning");
+            }
 
             for (int i = 0; i < simDayCount; i++)
             {
                 var date = DateTime.Today.AddDays(i);
                 var season = generator.GetSeason(date);
-                var temperature = generator.GenerateTemperature(season);
                 var (weather, icon) = generator.PickWeather(season);
+                var temperature = generator.GenerateTemperature(season);
+                
+                if (temp_F_Button.IsChecked == true)
+                {
+                    temperature = generator.CelsiusToFahrenheit(temperature);
+                    tempUnit = " °F";
+                }
 
                 string displayDate = i switch
                 {
