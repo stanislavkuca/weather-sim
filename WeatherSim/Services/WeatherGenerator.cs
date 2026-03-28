@@ -6,8 +6,16 @@ namespace WeatherSim.Services
 {
     internal class WeatherGenerator
     {
+        private static readonly (string weather, string iconPath) Cloudy = ("Cloudy", "/Assets/Icons/weather_cloudy.png");
+        private static readonly (string weather, string iconPath) Snowy = ("Snowy", "/Assets/Icons/weather_snowy.png");
+        private static readonly (string weather, string iconPath) Sunny = ("Sunny", "/Assets/Icons/weather_sunny.png");
+        private static readonly (string weather, string iconPath) Fog = ("Fog", "/Assets/Icons/weather_fog.png");
+        private static readonly (string weather, string iconPath) Storm = ("Storm", "/Assets/Icons/weather_storm.png");
+        private static readonly (string weather, string iconPath) Rain = ("Rain", "/Assets/Icons/weather_rain.png");
+
         Random random = new Random();
 
+        // Returns the season corresponding to a given month
         public string GetSeason(DateTime date)
         {
             int month = date.Month;
@@ -21,6 +29,7 @@ namespace WeatherSim.Services
             };
         }
 
+        // Generates a temperature based on the season
         public int GenerateTemperature(string season)
         {
             return season switch
@@ -33,14 +42,15 @@ namespace WeatherSim.Services
             };
         }
 
+        // Generates random weather for a given season
         public (string weather, string iconPath) PickWeather(string season)
         {
-            var cloudy = ("Cloudy", "/Assets/Icons/weather_cloudy.png");
-            var snowy = ("Snowy", "/Assets/Icons/weather_snowy.png");
-            var sunny = ("Sunny", "/Assets/Icons/weather_sunny.png");
-            var fog = ("Fog", "/Assets/Icons/weather_fog.png");
-            var storm = ("Storm", "/Assets/Icons/weather_storm.png");
-            var rain = ("Rain", "/Assets/Icons/weather_rain.png");
+            var cloudy = Cloudy;
+            var snowy = Snowy;
+            var sunny = Sunny;
+            var fog = Fog;
+            var storm = Storm;
+            var rain = Rain;
 
             int roll = random.Next(100);
 
@@ -48,23 +58,45 @@ namespace WeatherSim.Services
             {
                 "winter" => roll switch
                 {
-                    < 30 => (cloudy),
-                    < 70 => (snowy),
-                    < 75 => (fog),
-                    < 85 => (rain),
-                    _ => (sunny)
+                    < 30 => (Snowy),
+                    < 60 => (Cloudy),
+                    < 65 => (Sunny),
+                    < 70 => (Fog),
+                    < 80 => (Storm),
+                    _ => (Rain)
+                },
+
+                "spring" => roll switch
+                {
+                    < 0 => (Snowy),
+                    < 20 => (Cloudy),
+                    < 50 => (Sunny),
+                    < 70 => (Fog),
+                    < 80 => (Storm),
+                    _ => (Rain)
                 },
 
                 "summer" => roll switch
                 {
-                    < 5 => (fog),
-                    < 50 => (sunny),
-                    < 60 => (storm),
-                    < 90 => (cloudy),
-                    _ => (rain),
+                    < 0 => (Snowy),
+                    < 20 => (Cloudy),
+                    < 75 => (Sunny),
+                    < 80 => (Fog),
+                    < 90 => (Storm),
+                    _ => (Rain)
                 },
 
-                _ => (cloudy)
+                "autumn" => roll switch
+                {
+                    < 1 => (Snowy),
+                    < 30 => (Cloudy),
+                    < 55 => (Sunny),
+                    < 65 => (Fog),
+                    < 80 => (Storm),
+                    _ => (Rain)
+                },
+
+                _ => (Rain)
             };
         }
     }

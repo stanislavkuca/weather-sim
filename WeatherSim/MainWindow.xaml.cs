@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Automation.Text;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -29,7 +30,7 @@ namespace WeatherSim
 
         ObservableCollection<Day> days = new ObservableCollection<Day>();
         WeatherGenerator generator = new WeatherGenerator();
-
+        
         private void SimulateButton(object sender, RoutedEventArgs e)
         {
             days.Clear();
@@ -41,13 +42,20 @@ namespace WeatherSim
             {
                 var date = DateTime.Today.AddDays(i);
                 var season = generator.GetSeason(date);
-
                 var temperature = generator.GenerateTemperature(season);
                 var (weather, icon) = generator.PickWeather(season);
+
+                string displayDate = i switch
+                {
+                    0 => "Today",
+                    1 => "Tomorrow",
+                    _ => date.ToString("MMM dd, yyyy"),
+                };
 
                 days.Add(new Day
                 {
                     Date = date,
+                    DisplayDate = displayDate,
                     ImagePath = icon,
                     Temperature = temperature + tempUnit,
                     Weather = weather
