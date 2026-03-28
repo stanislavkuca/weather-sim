@@ -47,7 +47,7 @@
             <TextBlock Grid.Column="4" Text="Season:" 
                        Style="{StaticResource ControlTextBlockStyle}"/>
 
-            <ComboBox Grid.Column="6" Style="{StaticResource SeasonPickerStyle}">
+            <ComboBox Grid.Column="6" Style="{StaticResource SeasonPickerStyle}" x:Name="seasonComboBox">
                 <ComboBoxItem IsSelected="True">All</ComboBoxItem>
                 <ComboBoxItem>Spring</ComboBoxItem>
                 <ComboBoxItem>Summer</ComboBoxItem>
