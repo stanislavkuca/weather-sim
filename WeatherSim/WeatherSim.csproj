@@ -18,7 +18,7 @@
   <ItemGroup>
     <Resource Include="Assets\Icons\weather_cloudy.png" />
     <Resource Include="Assets\Icons\weather_fog.png" />
-    <Resource Include="Assets\Icons\weather_rain.png" />
+    <Resource Include="Assets\Icons\weather_rainy.png" />
     <Resource Include="Assets\Icons\weather_snowy.png" />
     <Resource Include="Assets\Icons\weather_storm.png" />
     <Resource Include="Assets\Icons\weather_sunny.png" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WeatherSim.Services
 {
@@ -11,7 +12,7 @@ namespace WeatherSim.Services
         private static readonly (string weather, string iconPath) Sunny = ("Sunny", "/Assets/Icons/weather_sunny.png");
         private static readonly (string weather, string iconPath) Fog = ("Fog", "/Assets/Icons/weather_fog.png");
         private static readonly (string weather, string iconPath) Storm = ("Storm", "/Assets/Icons/weather_storm.png");
-        private static readonly (string weather, string iconPath) Rain = ("Rain", "/Assets/Icons/weather_rain.png");
+        private static readonly (string weather, string iconPath) Rainy = ("Rainy", "/Assets/Icons/weather_rainy.png");
 
         Random random = new Random();
 
@@ -62,7 +63,7 @@ namespace WeatherSim.Services
                     < 65 => (Sunny),
                     < 70 => (Fog),
                     < 80 => (Storm),
-                    _ => (Rain)
+                    _ => (Rainy)
                 },
 
                 "spring" => roll switch
@@ -72,7 +73,7 @@ namespace WeatherSim.Services
                     < 50 => (Sunny),
                     < 70 => (Fog),
                     < 80 => (Storm),
-                    _ => (Rain)
+                    _ => (Rainy)
                 },
 
                 "summer" => roll switch
@@ -82,7 +83,7 @@ namespace WeatherSim.Services
                     < 75 => (Sunny),
                     < 80 => (Fog),
                     < 90 => (Storm),
-                    _ => (Rain)
+                    _ => (Rainy)
                 },
 
                 "autumn" => roll switch
@@ -92,10 +93,10 @@ namespace WeatherSim.Services
                     < 55 => (Sunny),
                     < 65 => (Fog),
                     < 80 => (Storm),
-                    _ => (Rain)
+                    _ => (Rainy)
                 },
 
-                _ => (Rain)
+                _ => (Rainy)
             };
         }
     }

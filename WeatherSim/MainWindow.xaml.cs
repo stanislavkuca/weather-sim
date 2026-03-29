@@ -44,9 +44,9 @@ namespace WeatherSim
         {
             ResetCollections();
 
-            if (!int.TryParse(NumDaysTextBox.Text, out int simDayCount))
+            if (!int.TryParse(NumDaysTextBox.Text, out int simDayCount) || simDayCount <= 0)
             {
-                MessageBox.Show("Enter a valid number", "Warning");
+                MessageBox.Show("Enter a number greater than 0", "Warning");
                 return;
             }
 
@@ -119,7 +119,7 @@ namespace WeatherSim
         {
             var (weather, icon) = generator.PickWeather(season);
 
-            weather = weather.Trim().ToLower();
+            weather = weather.Trim();
 
             days.Add(new Day
             {

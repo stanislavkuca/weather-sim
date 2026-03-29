@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         
         Title="Weather Simulator"
-        Height="765" Width="1230"
+        Height="860" Width="1230"
         WindowStartupLocation="CenterScreen"
         FontFamily="Segoe UI">
     
@@ -134,17 +134,17 @@
                     </Grid.RowDefinitions>
                     
                     <!-- Average Temperature -->
-                    <TextBlock Grid.Row="0" Text="Avg temperature:" Style="{StaticResource StatsTextBlockStyle}"/>
+                    <TextBlock Grid.Row="0" Text="Avg Temperature:" Style="{StaticResource StatsTextBlockStyle}"/>
                     <TextBlock Grid.Row="0" Grid.Column="2" x:Name="avgTempTextBlock"
                                Text="" Style="{StaticResource StatsTextBlockStyle}"/>
 
                     <!-- Max Temperature -->
-                    <TextBlock Grid.Row="2" Text="Max temperature:" Style="{StaticResource StatsTextBlockStyle}"/>
+                    <TextBlock Grid.Row="2" Text="Max Temperature:" Style="{StaticResource StatsTextBlockStyle}"/>
                     <TextBlock Grid.Row="2" Grid.Column="2" x:Name="maxTempTextBlock"
                                Text="" Style="{StaticResource StatsTextBlockStyle}"/>
 
                     <!-- Min Temperature -->
-                    <TextBlock Grid.Row="4" Text="Min temperature:" Style="{StaticResource StatsTextBlockStyle}"/>
+                    <TextBlock Grid.Row="4" Text="Min Temperature:" Style="{StaticResource StatsTextBlockStyle}"/>
                     <TextBlock Grid.Row="4" Grid.Column="2" x:Name="minTempTextBlock"
                                Text="" Style="{StaticResource StatsTextBlockStyle}"/>
 

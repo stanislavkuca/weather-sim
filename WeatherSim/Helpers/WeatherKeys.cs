@@ -8,12 +8,12 @@ namespace WeatherSim.Helpers
     {
         public static readonly string[] All =
         {
-            "snowy",
-            "cloudy",
-            "sunny",
-            "fog",
-            "storm",
-            "rain"
+            "Snowy",
+            "Cloudy",
+            "Sunny",
+            "Fog",
+            "Storm",
+            "Rainy"
         };
     }
 }
