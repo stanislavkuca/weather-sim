@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WeatherSim.Helpers;
 using WeatherSim.Models;
 using WeatherSim.Services;
 
@@ -22,40 +23,30 @@ namespace WeatherSim
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly ObservableCollection<Day> days = new ObservableCollection<Day>();
+        private readonly List<int> temps = new List<int>();
+        private readonly Dictionary<string, int> weatherCounts = new Dictionary<string, int>();
+        private readonly WeatherGenerator generator = new();
+
         public MainWindow()
         {
             InitializeComponent();
-
             weatherItemCollection.ItemsSource = days;
         }
 
-        ObservableCollection<Day> days = new ObservableCollection<Day>();
-        List<int> temps = new List<int>();
-        Dictionary<string, int> weatherCounts = new Dictionary<string, int>();
-        WeatherGenerator generator = new WeatherGenerator();
-        
         private void SimulateButton(object sender, RoutedEventArgs e)
         {
-            days.Clear();
-            temps.Clear();
-            weatherCounts.Clear();
+            ResetCollections();
 
-            int simDayCount = 0;
-            if (!int.TryParse(NumDaysTextBox.Text, out simDayCount))
+            if (!int.TryParse(NumDaysTextBox.Text, out int simDayCount))
             {
                 MessageBox.Show("Enter a valid number", "Warning");
                 return;
             }
 
-            string selectedSeason = (seasonComboBox.SelectedItem as ComboBoxItem)?.Content.ToString().ToLower() ?? "all";
-            DateTime currentDate = DateTime.Today;
-
-            if (selectedSeason != "All")
-            {
-                while (!IsMonthInSeason(currentDate.Month, selectedSeason))
-                    currentDate = currentDate.AddDays(1);
-            }
-                
+            string selectedSeason = GetSelectedSeason();
+            DateTime currentDate = SeasonHelper.AlignStartDateToSeason(DateTime.Today, selectedSeason);
+ 
             int generatedDays = 0;
             string tempUnit = " °C";
 
@@ -63,77 +54,24 @@ namespace WeatherSim
             {
                 string season = generator.GetSeason(currentDate).ToLower();
 
-                if (selectedSeason != "all" && season != selectedSeason)
+                if (!IsDateInSelectedSeason(season, selectedSeason))
                 {
                     currentDate = currentDate.AddDays(1);
                     continue;
                 }
 
-                var (weather, icon) = generator.PickWeather(season);
-                int temperature = generator.GenerateTemperature(season);
-                
-                if (temp_F_Button.IsChecked == true)
-                {
-                    temperature = generator.CelsiusToFahrenheit(temperature);
-                    tempUnit = " °F";
-                }
-
+                int temperature = GenerateTemperature(season, ref tempUnit);
                 temps.Add(temperature);
 
-                string displayDate;
-                if (selectedSeason == "all")
-                {
-                    displayDate = generatedDays switch
-                    {
-                        0 => "Today",
-                        1 => "Tomorrow",
-                        _ => currentDate.ToString("MMM dd, yyyy"),
-                    };
-                }
-                else
-                {
-                    displayDate = currentDate.ToString("MMM dd, yyyy");
-                }
+                string displayDate = DisplayDateService.GetDisplayDate(selectedSeason, generatedDays, currentDate);
 
-                days.Add(new Day
-                {
-                    Date = currentDate,
-                    DisplayDate = displayDate,
-                    ImagePath = icon,
-                    Temperature = temperature + tempUnit,
-                    Weather = weather
-                });
-
-                // Weather Count
-                if (weatherCounts.ContainsKey(weather))
-                    weatherCounts[weather]++;
-                else
-                    weatherCounts[weather] = 1;
+                AddDayEntry(currentDate, displayDate, temperature, tempUnit, season);
 
                 generatedDays++;
                 currentDate = currentDate.AddDays(1);
             }
 
-            // Avg Temp Calc
-            double avgTemp = Math.Round(temps.Average(), 1);
-            avgTempTextBlock.Text = avgTemp.ToString() + tempUnit;
-
-            // Max Temp
-            int maxTemp = temps.Max();
-            maxTempTextBlock.Text = maxTemp.ToString() + tempUnit;
-
-            // Min Temp
-            int minTemp = temps.Min();
-            minTempTextBlock.Text = minTemp.ToString() + tempUnit;
-
-            // Weather Output
-            StringBuilder sb = new StringBuilder();
-            foreach (var kvp in weatherCounts)
-            {
-                sb.AppendLine($"{kvp.Key}: {kvp.Value}");
-            }
-
-            weatherCountTextBlock.Text = sb.ToString();
+            UpdateStatistics(tempUnit);
         }
 
         private bool IsMonthInSeason(int month, string season)
@@ -148,16 +86,67 @@ namespace WeatherSim
             };
         }
 
-        private int GetSeasonStartMonth(string season)
+        // ----------------------------
+        // Helpers
+        // ----------------------------
+
+        private void ResetCollections()
         {
-            return season.ToLower() switch
+            days.Clear();
+            temps.Clear();
+            weatherCounts.Clear();
+        }
+
+        private string GetSelectedSeason()
+        {
+            return (seasonComboBox.SelectedItem as ComboBoxItem)?
+                .Content.ToString()?.ToLower() ?? "all";
+        }
+
+        private bool IsDateInSelectedSeason(string season, string selectedSeason)
+        {
+            return selectedSeason == "all" || season == selectedSeason;
+        }
+
+        private int GenerateTemperature(string season, ref string tempUnit)
+        {
+            int temp = generator.GenerateTemperature(season);
+
+            if (temp_F_Button.IsChecked == true)
             {
-                "winter" => 12,
-                "spring" => 3,
-                "summer" => 6,
-                "autumn" => 9,
-                _ => 1
-            };
+                temp = generator.CelsiusToFahrenheit(temp);
+                tempUnit = " °F";
+            }
+
+            return temp;
+        }
+
+        private void AddDayEntry(DateTime date, string displayDate, int temperature, string tempUnit, string season)
+        {
+            var (weather, icon) = generator.PickWeather(season);
+
+            days.Add(new Day
+            {
+                Date = date,
+                DisplayDate = displayDate,
+                ImagePath = icon,
+                Temperature = temperature + tempUnit,
+                Weather = weather
+            });
+
+            if (weatherCounts.ContainsKey(weather))
+                weatherCounts[weather]++;
+            else
+                weatherCounts[weather] = 1;
+        }
+
+        private void UpdateStatistics(string tempUnit)
+        {
+            avgTempTextBlock.Text = Math.Round(temps.Average(), 1) + tempUnit;
+            maxTempTextBlock.Text = temps.Max() + tempUnit;
+            minTempTextBlock.Text = temps.Min() + tempUnit;
+
+            weatherCountTextBlock.Text = StatisticsService.BuildWeatherCountText(weatherCounts);
         }
     }
 }
