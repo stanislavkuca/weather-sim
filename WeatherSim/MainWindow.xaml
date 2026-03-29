@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         
         Title="Weather Simulator"
-        Height="765" Width="1200"
+        Height="765" Width="1230"
         WindowStartupLocation="CenterScreen"
         FontFamily="Segoe UI">
     
