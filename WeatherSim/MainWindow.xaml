@@ -1,4 +1,14 @@
-﻿<Window x:Class="WeatherSim.MainWindow"
+﻿<!--
+    Program: Weather Simulator
+    Author: Stanislav Kuca
+    Description: The app simulates weather by generating a number of days 
+                 based on what the user enters. The user can choose if the days should 
+                 be from one season or from all seasons. They can also pick which 
+                 temperature unit to show. The app also displays statistics 
+                 like average, minimum, and maximum temperature, and counts of each 
+                 weather type.
+-->
+<Window x:Class="WeatherSim.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
