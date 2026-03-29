@@ -25,13 +25,19 @@ namespace WeatherSim
     {
         private readonly ObservableCollection<Day> days = new ObservableCollection<Day>();
         private readonly List<int> temps = new List<int>();
-        private readonly Dictionary<string, int> weatherCounts = new Dictionary<string, int>();
+        private Dictionary<string, int> weatherCounts = new Dictionary<string, int>();
         private readonly WeatherGenerator generator = new();
 
         public MainWindow()
         {
             InitializeComponent();
             weatherItemCollection.ItemsSource = days;
+            InitializeWeatherCounts();
+        }
+
+        private void InitializeWeatherCounts()
+        {
+            weatherCounts = WeatherKeys.All.ToDictionary(k => k, v => 0);
         }
 
         private void SimulateButton(object sender, RoutedEventArgs e)
@@ -74,18 +80,6 @@ namespace WeatherSim
             UpdateStatistics(tempUnit);
         }
 
-        private bool IsMonthInSeason(int month, string season)
-        {
-            return season.ToLower() switch
-            {
-                "winter" => month == 12 || month == 1 || month == 2,
-                "spring" => month >= 3 && month <= 5,
-                "summer" => month >= 6 && month <= 8,
-                "autumn" => month >= 9 && month <= 11,
-                _ => true
-            };
-        }
-
         // ----------------------------
         // Helpers
         // ----------------------------
@@ -94,7 +88,7 @@ namespace WeatherSim
         {
             days.Clear();
             temps.Clear();
-            weatherCounts.Clear();
+            InitializeWeatherCounts();
         }
 
         private string GetSelectedSeason()
@@ -124,6 +118,8 @@ namespace WeatherSim
         private void AddDayEntry(DateTime date, string displayDate, int temperature, string tempUnit, string season)
         {
             var (weather, icon) = generator.PickWeather(season);
+
+            weather = weather.Trim().ToLower();
 
             days.Add(new Day
             {

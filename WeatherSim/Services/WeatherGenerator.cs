@@ -51,13 +51,6 @@ namespace WeatherSim.Services
         // Generates random weather for a given season
         public (string weather, string iconPath) PickWeather(string season)
         {
-            var snowy = Snowy;
-            var cloudy = Cloudy;
-            var sunny = Sunny;
-            var fog = Fog;
-            var storm = Storm;
-            var rain = Rain;
-
             int roll = random.Next(100);
 
             return season switch

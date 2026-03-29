@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WeatherSim.Helpers;
 
 namespace WeatherSim.Services
 {
@@ -9,8 +10,9 @@ namespace WeatherSim.Services
         public static string BuildWeatherCountText(Dictionary<string, int> counts)
         {
             var sb = new StringBuilder();
-            foreach (var kvp in counts)
-                sb.AppendLine($"{kvp.Key}: {kvp.Value}");
+
+            foreach (var key in WeatherKeys.All)
+                sb.AppendLine($"{key}: {counts[key]}");
             return sb.ToString();
         }
     }
